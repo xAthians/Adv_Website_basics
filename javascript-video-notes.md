@@ -31,17 +31,17 @@ Videos:
 30. Käytä esim arr1.lenght saadaksesi arrayin pituuden/koon.
 31. käytä indeksien hallinnointiin arr1[index numero]. AIna array alkaa 0.
 32. kirjoittamalla arr1.lenght -1 vähenee mahdollisten kohtien määrä esim. 3 -> 2
-33. 
-34.
-35.
-36.
-37.
-38.
-39.
-40.
-41.
-42.
-43.
+33. käytä array.pop() poistaaksesi viimeisen arvon arraystä ja paulauttaa consoliin poistetun arvon. array.push(values) taas lisää arrayin pitutta.
+34. Käytä shift methodia poistamaan ensimmäisen arvon arraystä, joka on kohdassa [0]. Concat taas yhdistää kaksi eri arraytä.
+35. Toimii samat loopit kuin suurimmassa osissa muissa koodaus kielissä while, for jne..
+36. for loopin sisällä voi kirjoittaa let forIndex ilman että sen alustaisi ennen looppia.
+37. funktiot auttavat tekemään saman tehtävän useasti helpommaksi, sillä sinun tarvitsee vain kutsua sitä, eikä kirjoittaa samaa koodia uudelleen ja uudelleen minkä jo aikaisemmin teit.
+38. Funktiota kutsutaan vain funktionNimi();. voi käyttää dollareita, alaviivoja ja kirjaimia nimeämiseen mutta muut eivät toimi.
+39. Nuolet kirjoitetaan => ja ne antavat käyttää muutujan arvoja esim. const lisaa = (a, b) => a+b;
+40. Nuolet toimivat automaattisena palauttajana, ei tarvitse erikseen kirjoittaa return.
+41. JSON on perjaatteessa array useiden objektien lähettäminen yhdessä paketissa siirtoa varten.
+42. JSON.stringify lähettää takaisin stringi muotoon muunnettuna objektin eri parametrit.
+43. 
 44.
 45.
 46.
