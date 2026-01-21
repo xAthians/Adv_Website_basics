@@ -41,13 +41,13 @@ Videos:
 40. Nuolet toimivat automaattisena palauttajana, ei tarvitse erikseen kirjoittaa return.
 41. JSON on perjaatteessa array useiden objektien lähettäminen yhdessä paketissa siirtoa varten.
 42. JSON.stringify lähettää takaisin stringi muotoon muunnettuna objektin eri parametrit.
-43. 
-44.
-45.
-46.
-47.
-48.
-49.
-50.
-51.
-39
+43. Js objekteilla on ominaisuuksia ja methodeja jotka liittyvät niihin. Konstruktorit ovat ns pohjia. voi löytää niistä tietoa monella eri kirjoitus tavalla mm. book.title tai boon["title"].
+44. Voi luoda ensin eri muutujan jossa on data, ja myöhemmin luoda new Object, jonka parametriksi laittaa (data).
+45. Promise on parempi kuin callback, vähemmän spagettia lautasella.
+46. Käyttää resolve ja reject, joita voi käyttää parametreissä siten että riippuen siitä toimik okoodi vai ei se tekee sen pohjalta jotakin.
+47. async/await on selkeämpi kuin promise. Sitä käytetään kun juuri sen koodin sisällä on await, joka pausettaa koodin luvun prosessin tarkistuksen ajaksi.
+48. Jos tulostus on outo tai erillainen kun odotit se voi johtua unohdetusta await koodin pätkästä.
+49. paketti voi olla jokin kirjasto tai työkalu tai jaettu osa tai oma aplikaatio. Kaikista suosituin pakettien jako sivusto on NPM.
+50. Voi olla erillinen tiedosto minne lisää kaikki paketit ja niitten komennot, joita sitten käyttää koodin sieventämiseen tai parantamiseen.
+51. Seuraavaksi kannattaa alkaa tekemään projekteja taitojen kehittämiseen ja uusien asioiden oppimiseen / tiedon muistamiseen.
+
