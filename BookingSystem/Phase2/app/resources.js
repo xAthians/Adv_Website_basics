@@ -3,12 +3,16 @@
 // ===============================
 const actions = document.getElementById("resourceActions");
 const resourceNameContainer = document.getElementById("resourceNameContainer");
+const resourceDescriptionContainer = document.getElementById("resourceDescriptionContainer");
 
 // Example roles
 const role = "admin"; // "reserver" | "admin"
 
 // Will hold a reference to the Create button so we can enable/disable it
 let createButton = null;
+
+let resourceNameValid = false
+let resourceDescriptionValid = false
 
 // ===============================
 // 2) Button creation helpers
@@ -129,6 +133,39 @@ function isResourceNameValid(value) {
   return lengthValid && charactersValid;
 }
 
+function isResourceDescriptionValid(value) {
+  const trimmed = value.trim();
+
+  // Allowed: letters, numbers, Finnish letters, and space (based on your current regex)
+  const allowedPattern = /^[a-zA-Z0-9äöåÄÖÅ ]+$/;
+
+  const lengthValid = trimmed.length >= 10 && trimmed.length <= 50;
+  const charactersValid = allowedPattern.test(trimmed);
+
+  return lengthValid && charactersValid;
+}
+
+function createResourceDescriptionArea(container) {
+  const textarea = document.createElement("textarea");
+
+  // Core attributes
+  textarea.id = "resourceDescription";
+  textarea.name = "resourceDescription";
+  textarea.rows = 5;
+  textarea.placeholder = "Describe location, capacity, included equipment, or any usage notes…";
+
+  // Base Tailwind styling (single source of truth)
+  textarea.className = `
+    mt-2 w-full rounded-2xl border border-black/10 bg-white
+    px-4 py-3 text-sm outline-none
+    focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30
+    transition-all duration-200 ease-out
+  `;
+
+  container.appendChild(textarea);
+  return textarea;
+}
+
 function setInputVisualState(input, state) {
   // Reset to neutral base state (remove only our own validation-related classes)
   input.classList.remove(
@@ -164,10 +201,37 @@ function attachResourceNameValidation(input) {
       return;
     }
 
-    const valid = isResourceNameValid(raw);
+    //const valid = isResourceNameValid(raw);
+    resourceNameValid = isResourceNameValid(raw);
 
-    setInputVisualState(input, valid ? "valid" : "invalid");
-    setButtonEnabled(createButton, valid);
+    setInputVisualState(input, resourceNameValid ? "valid" : "invalid");
+    //setButtonEnabled(createButton, valid);
+    setButtonEnabled(createButton, resourceNameValid && resourceDescriptionValid);
+  };
+
+  
+  // Real-time validation
+  input.addEventListener("input", update);
+
+  // Initialize state on page load (Create disabled until valid)
+  update();
+}
+
+  function attachResourceDescriptionValidation(input) {
+  const update = () => {
+    const raw = input.value;
+    if (raw.trim() === "") {
+      setInputVisualState(input, "neutral");
+      setButtonEnabled(createButton, false);
+      return;
+    }
+
+    //const valid = isResourceDescriptionValid(raw);
+    resourceDescriptionValid = isResourceDescriptionValid(raw);
+
+    setInputVisualState(input, resourceDescriptionValid ? "valid" : "invalid");
+    //setButtonEnabled(createButton, valid);
+    setButtonEnabled(createButton, resourceNameValid && resourceDescriptionValid);
   };
 
   // Real-time validation
@@ -185,3 +249,5 @@ renderActionButtons(role);
 // Create + validate input
 const resourceNameInput = createResourceNameInput(resourceNameContainer);
 attachResourceNameValidation(resourceNameInput);
+const resourceDescriptionArea = createResourceDescriptionArea(resourceDescriptionContainer);
+attachResourceDescriptionValidation(resourceDescriptionArea);
