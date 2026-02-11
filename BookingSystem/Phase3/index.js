@@ -59,7 +59,16 @@ app.post("/api/resources", (req, res) => {
   console.log("Price ➡️ ", price);
   console.log("Price unit ➡️ ", unit);
   console.log("--------------------------");
-  return res.json({ ok: true, echo: req.body });
+  return res.json({
+  ok: true,
+  data: {
+    action: resourceAction,
+    resourceName: name,
+    resourceDescription: description,
+    resourceAvailable: available,
+    resourcePrice: price,
+    resourcePriceUnit: unit
+  }
 });
 
 // --- Fallback 404 for unknown API routes ---
