@@ -26,8 +26,7 @@ async function onSubmit(event) {
   const actionValue = submitter && submitter.value ? submitter.value : "create";
   const selectedUnit = document.querySelector('input[name="resourcePriceUnit"]:checked')?.value ?? "";
   const priceRaw = $("resourcePrice")?.value ?? "";
-  const resourcePrice = Number(priceRaw.trim()) || 0;
-
+  const resourcePrice = priceRaw === "" ? 0 : Number(priceRaw);
 
   const payload = {
     action: actionValue,
