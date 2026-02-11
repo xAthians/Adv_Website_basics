@@ -59,11 +59,13 @@ async function onSubmit(event) {
     let msg = "Server response " + `[${timestamp()}]\n`;
     msg += "--------------------------\n";
     msg += "Status ➡️ " + response.status + "\n";
-    msg += "Action ➡️ " + data.echo.action + "\n";
-    msg += "Name ➡️ "+ data.echo.resourceName + "\n";
-    msg += "Description ➡️ " + data.echo.resourceDescription + "\n";
-    msg += "Availability ➡️ " + data.echo.resourceAvailable + "\n";
-    msg += "Price unit ➡️ " + data.echo.resourcePriceUnit + "\n";
+    msg += "Action ➡️ " + data.data.action + "\n";
+    msg += "Name ➡️ " + data.data.resourceName + "\n";
+    msg += "Description ➡️ " + data.data.resourceDescription + "\n";
+    msg += "Availability ➡️ " + data.data.resourceAvailable + "\n";
+    msg += "Price ➡️ " + data.data.resourcePrice + "\n";
+    msg += "Price unit ➡️ " + data.data.resourcePriceUnit + "\n";
+
 
     console.log("Server response " + `[${timestamp()}]`);
     console.log("--------------------------");
