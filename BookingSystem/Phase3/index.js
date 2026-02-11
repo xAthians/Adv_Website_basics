@@ -70,6 +70,7 @@ app.post("/api/resources", (req, res) => {
     resourcePriceUnit: unit
   }
 });
+});
 
 // --- Fallback 404 for unknown API routes ---
 app.use("/api", (req, res) => {
