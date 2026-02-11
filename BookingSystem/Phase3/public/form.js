@@ -17,7 +17,7 @@ function timestamp() {
 // -------------- Form wiring --------------
 document.addEventListener("DOMContentLoaded", () => {
   const form = $("resourceForm");
-  form.addEventListener("submit", onSubmit);
+  if (form) form.addEventListener("submit", onSubmit);
 });
 
 async function onSubmit(event) {
@@ -26,7 +26,8 @@ async function onSubmit(event) {
   const actionValue = submitter && submitter.value ? submitter.value : "create";
   const selectedUnit = document.querySelector('input[name="resourcePriceUnit"]:checked')?.value ?? "";
   const priceRaw = $("resourcePrice")?.value ?? "";
-  const resourcePrice = priceRaw === "" ? 0 : Number(priceRaw);
+  const resourcePrice = Number(priceRaw.trim()) || 0;
+
 
   const payload = {
     action: actionValue,
