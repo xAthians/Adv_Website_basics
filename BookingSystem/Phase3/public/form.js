@@ -70,11 +70,11 @@ async function onSubmit(event) {
     console.log("Server response " + `[${timestamp()}]`);
     console.log("--------------------------");
     console.log("Status ➡️ ", response.status);
-    console.log("Action ➡️ ", data.echo.action);
-    console.log("Name ➡️ ", data.echo.resourceName);
-    console.log("Description ➡️ ", data.echo.resourceDescription);
-    console.log("Availability ➡️ ", data.echo.resourceAvailable);
-    console.log("Price ➡️ ", data.echo.resourcePrice);
+    console.log("Action ➡️ ", data.data.action);
+    console.log("Name ➡️ ", data.data.resourceName);
+    console.log("Description ➡️ ", data.data.resourceDescription);
+    console.log("Availability ➡️ ", data.data.resourceAvailable);
+    console.log("Price ➡️ ", data.data.resourcePrice);
 
     console.log("--------------------------");
     alert(msg);
