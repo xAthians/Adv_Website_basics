@@ -108,8 +108,6 @@ app.post('/api/resources', resourceValidators, async (req, res) => {
     return res.status(400).json({ ok: false, error: 'Only create is implemented right now' });
   }
 
-  resourceAvailable = false;
-
   try {
     const insertSql = `
       INSERT INTO resources (name, description, available, price, price_unit)
