@@ -118,7 +118,7 @@ app.post('/api/resources', resourceValidators, async (req, res) => {
       crypto.createHash('sha256').update(resourceName, 'utf8').digest('hex'),
       resourceDescription,
       Boolean(resourceAvailable),
-      Number(resourcePrice)*2,
+      Number(resourcePrice),
       resourcePriceUnit
     ];
     const { rows } = await pool.query(insertSql, params);
