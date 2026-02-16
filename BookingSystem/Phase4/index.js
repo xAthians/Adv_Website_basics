@@ -68,7 +68,7 @@ const resourceValidators = [
     .exists({ checkFalsy: true }).withMessage('resourcePriceUnit is required')
     .isString().withMessage('resourcePriceUnit must be a string')
     .trim()
-    .isIn(['hour', 'day'])
+    .isIn(['hour', 'day', 'week', 'month'])
     .withMessage("resourcePriceUnit must be 'hour', 'day', 'week', or 'month'"),
 ];
 
@@ -123,7 +123,6 @@ app.post('/api/resources', resourceValidators, async (req, res) => {
       Number(resourcePrice)*2,
       resourcePriceUnit
     ];
-
     const { rows } = await pool.query(insertSql, params);
     const created = rows[0];
 
