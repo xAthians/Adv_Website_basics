@@ -46,7 +46,8 @@ const resourceValidators = [
     .exists({ checkFalsy: true }).withMessage('resourceName is required')
     .isString().withMessage('resourceName must be a string')
     .trim()
-    .escape(),
+    .escape()
+    .not().matches(/[^>]*>/).withMessage("Do not use tags"),
 
   body('resourceDescription')
     .exists({ checkFalsy: true }).withMessage('resourceDescription is required')
