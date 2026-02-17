@@ -115,7 +115,7 @@ app.post('/api/resources', resourceValidators, async (req, res) => {
       RETURNING id, name, description, available, price, price_unit, created_at
     `;
     const params = [
-      crypto.createHash('sha256').update(resourceName, 'utf8').digest('hex'),
+      resourceName,
       resourceDescription,
       Boolean(resourceAvailable),
       Number(resourcePrice),
