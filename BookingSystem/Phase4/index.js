@@ -52,7 +52,8 @@ const resourceValidators = [
     .exists({ checkFalsy: true }).withMessage('resourceDescription is required')
     .isString().withMessage('resourceDescription must be a string')
     .trim()
-    .isLength({ min:10, max: 50 }).withMessage('resourceDescription must be 10-50 characters'),
+    .isLength({ min:10, max: 50 }).withMessage('resourceDescription must be 10-50 characters')
+    .not().matches(/[^>]*>/).withMessage("Do not use tags"),
 
   body('resourceAvailable')
     .exists({ checkFalsy: true }).withMessage('resourceAvailable is required')
