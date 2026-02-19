@@ -72,7 +72,7 @@ router.post("/", resourceValidators, async (req, res) => {
     const resourceId = rows[0].id;
     await logEvent({
       actorUserId,
-      message: `XXXX ${resourceId} XXXX`,
+      message: `Created resource ${resourceName}, ${resourcePrice}, ${resourcePriceUnit} `,
       entityType: "resource",
       entityId: resourceId,
     });
