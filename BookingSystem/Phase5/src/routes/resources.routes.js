@@ -72,7 +72,7 @@ router.post("/", resourceValidators, async (req, res) => {
     const resourceId = rows[0].id;
     await logEvent({
       actorUserId,
-      message: `Created resource ${resourceName}, ${resourcePrice}, ${resourcePriceUnit} `,
+      message: `Created resource ${resourceName}, Price ${resourcePrice}, PriceUnit ${resourcePriceUnit} `,
       entityType: "resource",
       entityId: resourceId,
     });
@@ -85,7 +85,7 @@ router.post("/", resourceValidators, async (req, res) => {
       console.error(err);
       await logEvent({
         actorUserId,
-        message: `YYYY ${resourceName} YYYY`,
+        message: `Resource with the name ${resourceName} already exists`,
         entityType: "resource",
         entityId: null,
       });
