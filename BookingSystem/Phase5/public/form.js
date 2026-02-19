@@ -183,7 +183,7 @@ async function onSubmit(event) {
     if (createdAt) msgLines.push(`Created at ➡️ ${createdAt}`);
     msgLines.push(`ID in database ➡️ ${body?.data?.id ?? ""}`);
 
-    const msg = `Resource ${resourceName} added succesfully`;
+    const msg = `Resource ${payload.resourceName} added succesfully`;
     showFormMessage("success", msg);
 
     // Notify UI layer (resources.js)
