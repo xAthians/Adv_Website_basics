@@ -150,14 +150,14 @@ async function onSubmit(event) {
     if (!response.ok) {
       // 400 = server-side validation errors (we expect errors[])
       if (response.status === 400) {
-        const msg = buildValidationMessage(body?.errors);
+        const msg = "Incorrect characters used, rejected by validation. Please change incorrect fields";
         showFormMessage("error", msg);
         return;
       }
 
       // 409 = duplicate resourceName (our new feature)
       if (response.status === 409) {
-        const msg =
+        const msg = 'Please try changing the name or checking logs to see already existing file';
           body?.details ||
           "A resource with the same name already exists. Please choose another name.";
         showFormMessage("info", `Duplicate blocked (409):\n\n${msg}`);
@@ -183,7 +183,7 @@ async function onSubmit(event) {
     if (createdAt) msgLines.push(`Created at ➡️ ${createdAt}`);
     msgLines.push(`ID in database ➡️ ${body?.data?.id ?? ""}`);
 
-    const msg = msgLines.join("\n");
+    const msg = `Resource ${resourceName} added succesfully`;
     showFormMessage("success", msg);
 
     // Notify UI layer (resources.js)
