@@ -1,4 +1,4 @@
-´´´mermaid
+```mermaid
 sequenceDiagram
     participant U as User (Browser)
     participant F as Frontend (form.js and resources.js)
@@ -32,4 +32,4 @@ sequenceDiagram
             F-->>U: Show success message
         end
     end
-´´´
+```
