@@ -33,6 +33,7 @@ sequenceDiagram
             F-->>U: Show success message
         end
     end
+
 ```
 READ
 ```mermaid
@@ -57,7 +58,6 @@ sequenceDiagram
 UPDATE
 ```mermaid
 sequenceDiagram
-    sequenceDiagram
     participant U as User (Browser)
     participant F as Frontend (form.js)
     participant B as Backend (Express Route)
