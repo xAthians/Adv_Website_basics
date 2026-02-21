@@ -1,3 +1,4 @@
+mermaid
 sequenceDiagram
     participant U as User (Browser)
     participant F as Frontend (form.js and resources.js)
