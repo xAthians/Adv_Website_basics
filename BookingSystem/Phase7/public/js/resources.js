@@ -3,25 +3,15 @@
 // ===============================
 import { initAuthUI, getUserRole, requireAuthOrBlockPage, logout } from "./auth-ui.js";
 
-// ===============================
-// 1) Page guard — detect if we are on the resources page
-// ===============================
-const isResourcesPage = document.getElementById("resourceActions");
-
-// ===============================
-// 2) Wrap ALL remaining code in a function
-// ===============================
-function initResourcesPage() {
-
     // ===============================
     // 3) Authorization
     // ===============================
-    initAuthUI();
-    if (!requireAuthOrBlockPage()) {
-        throw new Error("Authentication required");
-    }
+  initAuthUI();
+  if (!requireAuthOrBlockPage()) {
+    throw new Error("Authentication required");
+  }
 
-    window.logout = logout;
+  window.logout = logout;
 
   // ===============================
   // 1) DOM references
@@ -536,5 +526,4 @@ function initResourcesPage() {
   };
 
   loadResources();
-
-};
+  

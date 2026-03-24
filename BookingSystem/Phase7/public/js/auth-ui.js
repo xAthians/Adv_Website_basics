@@ -23,6 +23,25 @@ export function getUserRole() {
   }
 }
 
+export function loadCurrentUser() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.currentUser = null;
+    return null;
+  }
+
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    window.currentUser = payload;
+    return payload;
+  } catch (err) {
+    console.error("Invalid token");
+    localStorage.removeItem("token");
+    window.currentUser = null;
+    return null;
+  }
+}
+
 export function updateAuthLinks() {
   const token = localStorage.getItem("token");
   const authLinks = document.querySelectorAll(".auth-link");
@@ -94,9 +113,11 @@ export function updateHomePageUI() {
 }
 
 export function initAuthUI() {
+  loadCurrentUser();
   updateAuthLinks();
   updateResourceLinks();
 }
+
 
 export function logout() {
   localStorage.removeItem("token");
@@ -139,3 +160,4 @@ export function requireAuthOrBlockPage() {
     return false;
   }
 }
+
