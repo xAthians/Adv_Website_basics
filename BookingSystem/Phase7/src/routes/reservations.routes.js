@@ -21,6 +21,8 @@ router.post("/", async (req, res) => {
     status
   } = req.body;
 
+  console.log("Incoming reservation:", req.body);
+  
   try {
     const insertSql = `
       INSERT INTO reservations
@@ -51,7 +53,12 @@ router.post("/", async (req, res) => {
     return res.status(201).json({ ok: true, data: rows[0] });
 
   } catch (err) {
-    console.error("DB insert failed:", err);
+    console.error("DB insert failed:", {
+      body: req.body,
+      error: err.message,
+      stack: err.stack
+    });
+
     return res.status(500).json({ ok: false, error: "Database error" });
   }
 });
@@ -241,6 +248,5 @@ router.delete("/:id", async (req, res) => {
   }
 
 });
-
 
 export default router;

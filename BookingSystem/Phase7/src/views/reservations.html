@@ -30,11 +30,16 @@
             }
         }
     </script>
-    <script type="module" src="js/resources.js" defer ></script>
-    <script src="js/form.js" defer ></script>
+
+    <!-- Your scripts -->
+    <script type="module" src="js/resources.js" defer></script>
+    <script src="js/form.js" defer></script>
+    <script type="module" src="js/reservations.js" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col bg-brand-light text-brand-dark">
+
+    <!-- Header -->
     <header class="sticky top-0 z-40 bg-brand-dark text-white shadow-soft">
         <div class="mx-auto max-w-7xl px-6">
             <div class="flex h-16 items-center justify-between">
@@ -49,22 +54,26 @@
                         </span>
                     </div>
                 </a>
+
                 <nav class="flex items-center gap-3">
                     <a href="/resources" data-auth="user"
-                        class="res-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold hover:bg-white/10 w-40 text-center cursor-not-allowed pointer-events-none">
+                        class="res-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold hover:bg-white/10 w-40 text-center">
                         Resources
                     </a>
                     <a href="/reservations" data-auth="user"
-                        class="res-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold hover:bg-white/10 w-40 text-center cursor-not-allowed pointer-events-none">
+                        class="res-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold bg-white/10 w-40 text-center">
                         Reservations
                     </a>
-                    <a href="/register" data-auth="guest" class="auth-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold hover:bg-white/10 w-40 text-center">
+                    <a href="/register" data-auth="guest"
+                        class="auth-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold hover:bg-white/10 w-40 text-center">
                         Register
                     </a>
-                    <a href="/login" data-auth="guest" class="auth-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold hover:bg-white/10 w-40 text-center">
+                    <a href="/login" data-auth="guest"
+                        class="auth-link rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold hover:bg-white/10 w-40 text-center">
                         Sign in
                     </a>
-                    <button onclick="logout()" data-auth="user" class="auth-link hidden rounded-xl bg-brand-primary px-4 py-2 text-sm font-semibold text-white w-40 text-center">
+                    <button onclick="logout()" data-auth="user"
+                        class="auth-link hidden rounded-xl bg-brand-primary px-4 py-2 text-sm font-semibold text-white w-40 text-center">
                         Sign out
                     </button>
                 </nav>
@@ -72,6 +81,7 @@
         </div>
     </header>
 
+    <!-- Main -->
     <main id="mainContent" class="mx-auto max-w-7xl px-6 flex-grow">
 
         <!-- Page header -->
@@ -81,179 +91,143 @@
                     <div>
                         <span
                             class="inline-flex items-center gap-2 rounded-full bg-brand-blue/10 px-4 py-1 text-sm font-semibold text-brand-blue">
-                            Resource management
+                            Reservation management
                         </span>
                         <h1 class="mt-4 text-3xl font-semibold leading-tight">
-                            Resources
+                            Reservations
                         </h1>
                         <p class="mt-2 max-w-2xl text-sm text-black/70">
-                            As a reserver, you can see the resources in use. As a manager, you can create, update, and delete resources.
+                            Create, update, and manage reservations for all available resources.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Form -->
+        <!-- Reservation Form + List -->
         <section class="pb-16">
             <div class="grid gap-8 lg:grid-cols-12">
                 <div class="lg:col-span-8">
                     <div class="rounded-3xl bg-white p-8 shadow-soft">
-                        <h2 class="text-xl font-semibold">Resource form</h2>
+                        <h2 class="text-xl font-semibold">Reservation form</h2>
                         <p class="mt-1 text-sm text-black/60">
-                            All fields are required. Fill in the details below. Use Create for new items, Update for
-                            existing ones, and Delete to remove.
+                            Fill in the details below. Use Create for new items, Update for existing ones, and Delete to
+                            remove.
                         </p>
-                        <div id="formMessage" class="hidden mt-6 rounded-2xl border px-4 py-3 text-sm" role="alert"></div>
 
-                        <form class="mt-8 space-y-6" id="resourceForm" novalidate>
-                            <input type="hidden" id="resourceId" name="resourceId" value="" />
+                        <div id="formMessage" class="hidden mt-6 rounded-2xl border px-4 py-3 text-sm" role="alert">
+                        </div>
+
+                        <form class="mt-8 space-y-6" id="reservationForm" novalidate>
+                            <input type="hidden" id="reservationId" name="reservationId" value="" />
+
                             <!-- Resource name -->
                             <div>
-                                <label for="resourceName" class="block text-sm font-semibold">
-                                    Resource name
+                                <label for="resourceId" class="block text-sm font-semibold">
+                                    Resource
                                 </label>
-                                <div id="resourceNameCnt"></div>
+
+                                <select id="resourceId" name="resourceId" class="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none
+               focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30 transition-all duration-200">
+                                    <!-- JS will populate options here -->
+                                </select>
+
                                 <p class="mt-2 text-xs text-black/50">
-                                    Use a short, unique name users recognize (5–30 characters). Use letters,
-                                    numbers, spaces and symbols ,.- only.
+                                    Select the resource being reserved.
                                 </p>
                             </div>
 
-                            <!-- Description -->
+                            <!-- Start date -->
                             <div>
-                                <label for="resourceDescription" class="block text-sm font-semibold">
-                                    Resource description
+                                <label for="reservationStart" class="block text-sm font-semibold">
+                                    Reservation start date
                                 </label>
-                                <div id="resourceDescriptionCnt"></div>
+                                <input id="reservationStart" name="reservationStart" type="date"
+                                    class="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none
+                                           focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30 transition-all duration-200" />
+                            </div>
+
+                            <!-- End date -->
+                            <div>
+                                <label for="reservationEnd" class="block text-sm font-semibold">
+                                    Reservation end date
+                                </label>
+                                <input id="reservationEnd" name="reservationEnd" type="date"
+                                    class="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none
+                                           focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30 transition-all duration-200" />
+                            </div>
+
+                            <!-- Note -->
+                            <div>
+                                <label for="reservationNote" class="block text-sm font-semibold">
+                                    Note
+                                </label>
+
+                                <textarea id="reservationNote" name="reservationNote" class="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none
+               focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30 transition-all duration-200"></textarea>
+
                                 <p class="mt-2 text-xs text-black/50">
-                                    Keep it practical: what it is, and who it’s for (10–50 characters). Use letters,
-                                    numbers, spaces and symbols ,.- only.
+                                    Optional: add any details relevant to the reservation.
                                 </p>
                             </div>
 
-                            <!-- Availability + Price -->
-                            <div class="grid gap-6 lg:grid-cols-3">
+                            <!-- Status -->
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">
+                                    Status
+                                </label>
 
-                                <!-- Availability (Switch) -->
-                                <div class="lg:col-span-1">
-                                    <span class="block text-sm font-semibold mb-2">
-                                        Availability
-                                    </span>
-                                    <div class="ml-1 mt-2 mb-3 flex items-center min-h-[48px]">
-
-                                        <label class="inline-flex items-center cursor-pointer select-none">
-                                            <input type="checkbox" id="resourceAvailable" name="resourceAvailable"
-                                                class="sr-only peer" />
-
-                                            <div class="relative w-11 h-6 rounded-full bg-black/20
-                                                peer-checked:bg-brand-primary
-                                                transition-all duration-200
-                                                after:content-['']
-                                                after:absolute after:top-[2px] after:left-[2px]
-                                                after:w-5 after:h-5 after:bg-white after:rounded-full
-                                                after:transition-all duration-200
-                                                peer-checked:after:translate-x-5">
-                                            </div>
-
-                                            <span class="ml-3 text-sm text-black/70">
-                                                Available
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <p class="mt-2 text-xs text-black/50">
-                                        When enabled, the resource is available for normal booking..
-                                    </p>
-                                </div>
-
-                                <!-- Price -->
-                                <div class="lg:col-span-2">
-                                    <label for="resourcePrice" class="block text-sm font-semibold">
-                                        Price
+                                <div class="mt-2 flex flex-wrap gap-4">
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="reservationStatus" value="pending" checked>
+                                        <span class="text-sm">pending</span>
                                     </label>
 
-                                    <!-- Price value -->
-                                    <div class="mt-2 flex gap-2 items-stretch">
-                                        <input id="resourcePrice" name="resourcePrice" type="number" placeholder="0.00"
-                                            min="0" step="0.01" class="w-full max-w-[180px] rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none
-           focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30
-           transition-all duration-200 ease-out" />
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="reservationStatus" value="confirmed">
+                                        <span class="text-sm">confirmed</span>
+                                    </label>
 
-                                        <span
-                                            class="inline-flex items-center rounded-2xl border border-black/10 bg-black/5 px-4 text-sm font-semibold text-black/70">
-                                            €
-                                        </span>
-                                    </div>
-
-
-                                    <!-- Price unit (Radio buttons) -->
-                                    <div class="mt-4 flex flex-wrap gap-4">
-                                        <label class="inline-flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="resourcePriceUnit" value="hour" checked>
-                                            <span class="text-sm">hour</span>
-                                        </label>
-
-                                        <label class="inline-flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="resourcePriceUnit" value="day">
-                                            <span class="text-sm">day</span>
-                                        </label>
-
-                                        <label class="inline-flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="resourcePriceUnit" value="week">
-                                            <span class="text-sm">week</span>
-                                        </label>
-
-                                        <label class="inline-flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="resourcePriceUnit" value="month">
-                                            <span class="text-sm">month</span>
-                                        </label>
-                                    </div>
-
-                                    <p class="mt-2 text-xs text-black/50">
-                                        Set the price per selected time unit. Use 0 for free resources.
-                                    </p>
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="reservationStatus" value="cancelled">
+                                        <span class="text-sm">cancelled</span>
+                                    </label>
                                 </div>
-
                             </div>
 
-
                             <!-- Actions -->
-                            <div id="resourceActions"
-                                class="mt-8 grid gap-4 w-full grid-cols-1 sm:grid-flow-col sm:auto-cols-fr"></div>
+                            <div id="reservationActions"
+                                class="mt-8 grid gap-4 w-full grid-cols-1 sm:grid-flow-col sm:auto-cols-fr">
+
+                                <button type="submit" class="rounded-2xl bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6
+                                           transition-all duration-200 shadow-soft">
+                                    Create
+                                </button>
+
+                                <button type="button" id="clearReservationForm" class="rounded-2xl bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6
+                                           transition-all duration-200 shadow-soft">
+                                    Clear
+                                </button>
+
+                            </div>
                         </form>
                     </div>
                 </div>
 
-                <!-- Right side (optional info card matching theme) -->
+                <!-- Reservation list -->
                 <aside class="lg:col-span-4 space-y-6">
-                    <!-- Resource list -->
                     <div class="rounded-3xl bg-white p-6 shadow-soft">
                         <div class="flex items-center justify-between gap-3">
-                            <h3 class="font-semibold">Resource list</h3>
+                            <h3 class="font-semibold">Reservation list</h3>
                         </div>
 
                         <p class="mt-2 text-xs text-black/50">
                             Click an item to view, edit or delete it.
                         </p>
 
-                        <div id="resourceList" class="mt-4 space-y-3">
-                            <!-- resources.js renders items here -->
+                        <div id="reservationList" class="mt-4 space-y-3">
+                            <!-- reservations.js renders items here -->
                         </div>
-                    </div>
-
-                    <!-- Original info card -->
-                    <div class="rounded-3xl bg-white p-6 shadow-soft">
-                        <h3 class="font-semibold">Good resource details</h3>
-                        <ul class="mt-4 space-y-2 text-sm text-black/70">
-                            <li>• Clear name users recognize</li>
-                            <li>• Practical description (capacity, location, notes)</li>
-                            <li>• Availability reflects real-world access</li>
-                            <li>• Pricing is consistent and predictable</li>
-                        </ul>
-                        <a href="index.html"
-                            class="mt-5 inline-block w-full rounded-2xl bg-brand-primary px-4 py-3 text-center text-sm text-white hover:bg-brand-dark/80 transition-all duration-200 ease-out">
-                            Back to homepage
-                        </a>
                     </div>
                 </aside>
             </div>
@@ -282,13 +256,19 @@
                 <!-- Footer navigation -->
                 <nav class="flex items-center gap-3 text-sm text-white/70">
                     <a href="/privacypolicy"
-                        class="rounded-full px-3 py-1 hover:bg-white/10 hover:text-white transition cursor-not-allowed pointer-events-none">Privacy</a>
+                        class="rounded-full px-3 py-1 hover:bg-white/10 hover:text-white transition cursor-not-allowed pointer-events-none">
+                        Privacy
+                    </a>
                     <span class="text-white/30">|</span>
                     <a href="/terms"
-                        class="rounded-full px-3 py-1 hover:bg-white/10 hover:text-white transition cursor-not-allowed pointer-events-none">Terms</a>
+                        class="rounded-full px-3 py-1 hover:bg-white/10 hover:text-white transition cursor-not-allowed pointer-events-none">
+                        Terms
+                    </a>
                     <span class="text-white/30">|</span>
                     <a href="/cookiepolicy"
-                        class="rounded-full px-3 py-1 hover:bg-white/10 hover:text-white transition cursor-not-allowed pointer-events-none">Cookies</a>
+                        class="rounded-full px-3 py-1 hover:bg-white/10 hover:text-white transition cursor-not-allowed pointer-events-none">
+                        Cookies
+                    </a>
                 </nav>
 
             </div>
@@ -305,6 +285,10 @@
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
     </script>
+
+</body>
+
+</html>
 
 </body>
 
