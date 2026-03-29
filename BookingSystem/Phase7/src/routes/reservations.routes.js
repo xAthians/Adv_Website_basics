@@ -2,6 +2,7 @@
 import express from "express";
 import pool from "../db/pool.js";
 import { logEvent } from "../services/log.service.js";
+import { requireAuth } from "../../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -9,12 +10,11 @@ const router = express.Router();
    CREATE
    POST /api/reservations
 ===================================================== */
-router.post("/", async (req, res) => {
-  const actorUserId = null;
+router.post("/", requireAuth, async (req, res) => {
+  const actorUserId = req.user.id; // <-- from JWT
 
   const {
     resourceId,
-    userId,
     startTime,
     endTime,
     note,
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
   } = req.body;
 
   console.log("Incoming reservation:", req.body);
-  
+
   try {
     const insertSql = `
       INSERT INTO reservations
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
 
     const params = [
       Number(resourceId),
-      Number(userId),
+      actorUserId,        // <-- always valid, from JWT
       startTime,
       endTime,
       note || null,
@@ -53,11 +53,10 @@ router.post("/", async (req, res) => {
     return res.status(201).json({ ok: true, data: rows[0] });
 
   } catch (err) {
-    console.error("DB insert failed:", {
-      body: req.body,
-      error: err.message,
-      stack: err.stack
-    });
+    console.error("🔥 SQL ERROR:", err);
+    console.error("🔥 Full error object:", JSON.stringify(err, null, 2));
+    console.error("🔥 Body:", req.body);
+    console.log("🔥 req.user =", req.user);
 
     return res.status(500).json({ ok: false, error: "Database error" });
   }
@@ -69,9 +68,7 @@ router.post("/", async (req, res) => {
    GET /api/reservations
 ===================================================== */
 router.get("/", async (req, res) => {
-
   try {
-
     const sql = `
       SELECT
         r.*,
@@ -132,7 +129,6 @@ router.get("/:id", async (req, res) => {
     console.error("READ ONE failed:", err);
     return res.status(500).json({ ok: false, error: "Database error" });
   }
-
 });
 
 
@@ -140,19 +136,17 @@ router.get("/:id", async (req, res) => {
    UPDATE
    PUT /api/reservations/:id
 ===================================================== */
-router.put("/:id", async (req, res) => {
-
+router.put("/:id", requireAuth, async (req, res) => {
   const id = Number(req.params.id);
 
   if (isNaN(id)) {
     return res.status(400).json({ ok: false, error: "Invalid ID" });
   }
 
-  const actorUserId = null;
+  const actorUserId = req.user.id;
 
   const {
     resourceId,
-    userId,
     startTime,
     endTime,
     note,
@@ -175,7 +169,7 @@ router.put("/:id", async (req, res) => {
 
     const params = [
       Number(resourceId),
-      Number(userId),
+      actorUserId,   // <-- always valid
       startTime,
       endTime,
       note || null,
@@ -211,15 +205,14 @@ router.put("/:id", async (req, res) => {
    DELETE
    DELETE /api/reservations/:id
 ===================================================== */
-router.delete("/:id", async (req, res) => {
-
+router.delete("/:id", requireAuth, async (req, res) => {
   const id = Number(req.params.id);
 
   if (isNaN(id)) {
     return res.status(400).json({ ok: false, error: "Invalid ID" });
   }
 
-  const actorUserId = null;
+  const actorUserId = req.user.id;
 
   try {
 
@@ -246,7 +239,6 @@ router.delete("/:id", async (req, res) => {
     console.error("DELETE failed:", err);
     return res.status(500).json({ ok: false, error: "Database error" });
   }
-
 });
 
 export default router;
