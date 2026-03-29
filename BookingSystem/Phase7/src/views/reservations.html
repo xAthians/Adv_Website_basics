@@ -200,37 +200,49 @@
                             <div id="reservationActions"
                                 class="mt-8 grid gap-4 w-full grid-cols-1 sm:grid-flow-col sm:auto-cols-fr">
 
-                                <button type="submit" class="rounded-2xl bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6
-                                           transition-all duration-200 shadow-soft">
+                                <!-- CREATE MODE -->
+                                <button id="btnCreate" type="submit" class="rounded-2xl bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6
+                   transition-all duration-200 shadow-soft">
                                     Create
                                 </button>
 
-                                <button type="button" id="clearReservationForm" class="rounded-2xl bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6
-                                           transition-all duration-200 shadow-soft">
+                                <button id="btnClear" type="button" class="rounded-2xl bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6
+                   transition-all duration-200 shadow-soft">
                                     Clear
                                 </button>
 
-                            </div>
-                        </form>
+                                <!-- EDIT MODE -->
+                                <button id="btnUpdate" type="button" class="hidden rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6
+                   transition-all duration-200 shadow-soft">
+                                    Update
+                                </button>
+
+                                <button id="btnDelete" type="button" class="hidden rounded-2xl bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 px-6
+                   transition-all duration-200 shadow-soft">
+                                    Delete
+                                </button>
+
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Reservation list -->
+            <aside class="lg:col-span-4 space-y-6">
+                <div class="rounded-3xl bg-white p-6 shadow-soft">
+                    <div class="flex items-center justify-between gap-3">
+                        <h3 class="font-semibold">Reservation list</h3>
+                    </div>
+
+                    <p class="mt-2 text-xs text-black/50">
+                        Click an item to view, edit or delete it.
+                    </p>
+
+                    <div id="reservationList" class="mt-4 space-y-3">
+                        <!-- reservations.js renders items here -->
                     </div>
                 </div>
-
-                <!-- Reservation list -->
-                <aside class="lg:col-span-4 space-y-6">
-                    <div class="rounded-3xl bg-white p-6 shadow-soft">
-                        <div class="flex items-center justify-between gap-3">
-                            <h3 class="font-semibold">Reservation list</h3>
-                        </div>
-
-                        <p class="mt-2 text-xs text-black/50">
-                            Click an item to view, edit or delete it.
-                        </p>
-
-                        <div id="reservationList" class="mt-4 space-y-3">
-                            <!-- reservations.js renders items here -->
-                        </div>
-                    </div>
-                </aside>
+            </aside>
             </div>
         </section>
 

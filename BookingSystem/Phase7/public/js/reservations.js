@@ -1,6 +1,7 @@
 // ===============================
 // 0) Authorization
 // ===============================
+let editMode = false;
 
 import { initAuthUI, requireAuthOrBlockPage, logout } from "./auth-ui.js";
 
@@ -110,7 +111,7 @@ async function loadReservations() {
 
             item.innerHTML = `
                 <div class="font-semibold">${r.resource_name}</div>
-                <div class="text-xs text-black/60">${r.start_time} → ${r.end_time}</div>
+                <div class="text-xs text-black/60">${r.start_time.split("T")[0]} → ${r.end_time.split("T")[0]}
                 <div class="text-xs text-black/50">${r.status}</div>
             `;
 
@@ -137,6 +138,13 @@ function loadIntoForm(r) {
     for (const radio of fieldStatus) {
         radio.checked = radio.value === r.status;
     }
+
+    // Switch to edit mode
+    editMode = true;
+    btnCreate.classList.add("hidden");
+    btnClear.classList.add("hidden");
+    btnUpdate.classList.remove("hidden");
+    btnDelete.classList.remove("hidden");
 
     showMessage("success", "Loaded reservation into form");
 }
