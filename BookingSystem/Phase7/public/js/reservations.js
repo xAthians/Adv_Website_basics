@@ -6,7 +6,7 @@ let editMode = false;
 import { initAuthUI, requireAuthOrBlockPage, logout } from "./auth-ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    initAuthUI(); // MUST run first
+    initAuthUI();
 
     if (!requireAuthOrBlockPage()) {
         throw new Error("Authentication required");
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
 const form = document.getElementById("reservationForm");
 const messageBox = document.getElementById("formMessage");
 const listContainer = document.getElementById("reservationList");
-const clearBtn = document.getElementById("clearReservationForm");
 
 // Form fields
 const fieldId = document.getElementById("reservationId");
@@ -34,6 +33,12 @@ const fieldStart = document.getElementById("reservationStart");
 const fieldEnd = document.getElementById("reservationEnd");
 const fieldNote = document.getElementById("reservationNote");
 const fieldStatus = document.getElementsByName("reservationStatus");
+
+// Buttons
+const btnCreate = document.getElementById("btnCreate");
+const btnClear = document.getElementById("btnClear");
+const btnUpdate = document.getElementById("btnUpdate");
+const btnDelete = document.getElementById("btnDelete");
 
 // ===============================
 // 2) Helpers
@@ -53,7 +58,25 @@ function getSelectedStatus() {
     for (const r of fieldStatus) {
         if (r.checked) return r.value;
     }
-    return "pending";
+    return "active"; // default
+}
+
+function switchToCreateMode() {
+    editMode = false;
+
+    btnCreate.classList.remove("hidden");
+    btnClear.classList.remove("hidden");
+    btnUpdate.classList.add("hidden");
+    btnDelete.classList.add("hidden");
+}
+
+function switchToEditMode() {
+    editMode = true;
+
+    btnCreate.classList.add("hidden");
+    btnClear.classList.add("hidden");
+    btnUpdate.classList.remove("hidden");
+    btnDelete.classList.remove("hidden");
 }
 
 function clearForm() {
@@ -62,8 +85,10 @@ function clearForm() {
     fieldStart.value = "";
     fieldEnd.value = "";
     fieldNote.value = "";
-    fieldStatus[0].checked = true; // pending
-    showMessage("success", "Form cleared");
+    fieldStatus[0].checked = true; // default to active
+
+    switchToCreateMode();
+    // Removed message from here
 }
 
 // ===============================
@@ -111,7 +136,9 @@ async function loadReservations() {
 
             item.innerHTML = `
                 <div class="font-semibold">${r.resource_name}</div>
-                <div class="text-xs text-black/60">${r.start_time.split("T")[0]} → ${r.end_time.split("T")[0]}
+                <div class="text-xs text-black/60">
+                    ${r.start_time.split("T")[0]} → ${r.end_time.split("T")[0]}
+                </div>
                 <div class="text-xs text-black/50">${r.status}</div>
             `;
 
@@ -139,13 +166,7 @@ function loadIntoForm(r) {
         radio.checked = radio.value === r.status;
     }
 
-    // Switch to edit mode
-    editMode = true;
-    btnCreate.classList.add("hidden");
-    btnClear.classList.add("hidden");
-    btnUpdate.classList.remove("hidden");
-    btnDelete.classList.remove("hidden");
-
+    switchToEditMode();
     showMessage("success", "Loaded reservation into form");
 }
 
@@ -157,8 +178,8 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const id = fieldId.value;
-    const method = id ? "PUT" : "POST";
-    const url = id ? `/api/reservations/${id}` : "/api/reservations";
+    const method = editMode ? "PUT" : "POST";
+    const url = editMode ? `/api/reservations/${id}` : "/api/reservations";
 
     const payload = {
         resourceId: fieldResource.value,
@@ -185,7 +206,7 @@ form.addEventListener("submit", async (e) => {
             return;
         }
 
-        showMessage("success", id ? "Reservation updated" : "Reservation created");
+        showMessage("success", editMode ? "Reservation updated" : "Reservation created");
 
         clearForm();
         loadReservations();
@@ -199,6 +220,8 @@ form.addEventListener("submit", async (e) => {
 // ===============================
 // 7) Delete reservation
 // ===============================
+
+btnDelete.addEventListener("click", deleteReservation);
 
 async function deleteReservation() {
     const id = fieldId.value;
@@ -234,4 +257,7 @@ async function deleteReservation() {
 // 8) Clear button
 // ===============================
 
-clearBtn.addEventListener("click", clearForm);
+btnClear.addEventListener("click", () => {
+    clearForm();
+    showMessage("success", "Form cleared");
+});
