@@ -6,7 +6,7 @@ import CanonLens from "../assets/Canon_lense.jpg";
 export default function PopularRentals() {
   return (
     <section>
-      <h2>Popular Rentals</h2>
+      <h2 className="black-h2">Popular Rentals</h2>
       <div className="products">
         <article>
           <h3>Canon EOS 5D Mark IV</h3>
