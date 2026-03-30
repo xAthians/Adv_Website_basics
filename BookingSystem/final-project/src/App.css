@@ -4,9 +4,16 @@
 }
 
 h1 {
-  color: blue;
+  color: rgba(0, 255, 98, 0.548);
 }
 
 p {
   font-size: 18px;
+}
+
+.header {
+  background: #064d1d;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
 }
