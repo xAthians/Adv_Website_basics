@@ -1,3 +1,4 @@
+
 /* Reset */
 * {
   margin: 0;
@@ -226,5 +227,130 @@ footer a:hover {
 
   .cta {
     padding: 1.5rem;
+  }
+}
+
+/* ----------------------------- */
+/* Form Page Styling             */
+/* ----------------------------- */
+.page-wrapper {
+  min-height: calc(100vh - 200px); /* adjust if needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #064d1d;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+/* Form Card */
+.form-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Form Groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Inputs */
+.form-input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #064d1d;
+  outline: none;
+}
+
+/* Error Messages */
+.form-error {
+  color: #b30000;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* Submit Button */
+.primary-button {
+  background: #064d1d;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: fit-content;
+}
+
+.primary-button:hover {
+  background: #046a28;
+}
+
+/* Response Box */
+.response-box {
+  margin-top: 2rem;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.response-box h2 {
+  margin-bottom: 1rem;
+  color: #064d1d;
+}
+
+.response-box pre {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  border: 1px solid #eee;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .form-card {
+    padding: 1.5rem;
+  }
+
+  .primary-button {
+    width: 100%;
+    text-align: center;
   }
 }
