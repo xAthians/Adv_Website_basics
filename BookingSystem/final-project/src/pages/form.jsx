@@ -19,6 +19,8 @@ export default function FormPage() {
 
     const [errors, setErrors] = useState({});
     const [responseData, setResponseData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -35,25 +37,33 @@ export default function FormPage() {
             result.error.issues.forEach((issue) => {
                 fieldErrors[issue.path[0]] = issue.message;
             });
+
             setErrors(fieldErrors);
             setResponseData(null);
+            setSuccessMessage("");
             return;
         }
 
         setErrors({});
+        setSuccessMessage("");
+        setLoading(true);
 
-        // Send to httpbin
         try {
             const res = await fetch("https://httpbin.org/post", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(result.data),
             });
 
             const data = await res.json();
+
             setResponseData(data);
+            setSuccessMessage("Form submitted successfully! 🎉");
         } catch (err) {
-            setResponseData({ error: "Failed to send data." });
+            console.error(err);
+            setSuccessMessage("Something went wrong while sending data ❌");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -62,10 +72,9 @@ export default function FormPage() {
             <Header />
 
             <div className="page-wrapper">
-
                 <main className="page-container" style={{ maxWidth: "800px", margin: "0 auto", padding: "2rem" }}>
                     <h1 className="page-title">Submit Your Information</h1>
-                    <p className="page-subtitle">Fill out the form below and we’ll be in contact with you.</p>
+                    <p className="page-subtitle">Fill out the form below and we’ll be in contact.</p>
 
                     <FormComponent
                         formData={formData}
@@ -74,11 +83,30 @@ export default function FormPage() {
                         handleSubmit={handleSubmit}
                     />
 
-                    {/* RESPONSE */}
+                    {/* LOADING */}
+                    {loading && <p>Sending data... ⏳</p>}
+
+                    {/* SUCCESS MESSAGE */}
+                    {successMessage && (
+                        <p style={{ marginTop: "10px", fontWeight: "bold" }}>{successMessage}</p>
+                    )}
+
+                    {/* CLEAN JSON RESPONSE */}
                     {responseData && (
                         <div className="response-box">
                             <h2>Server Response</h2>
-                            <pre>{JSON.stringify(responseData, null, 2)}</pre>
+
+                            <div
+                                style={{
+                                    background: "#e2e2e2",
+                                    color: "#0c0c0c",
+                                    padding: "15px",
+                                    borderRadius: "10px",
+                                    overflowX: "auto",
+                                }}
+                            >
+                                <pre>{JSON.stringify(responseData.json, null, 2)}</pre>
+                            </div>
                         </div>
                     )}
                 </main>
