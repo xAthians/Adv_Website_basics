@@ -24,8 +24,8 @@
             </section>
 
             <aside class="author-card">
-                <p><strong>Author:</strong> <span id="author-name">Your Name</span></p>
-                <p><strong>Group ID:</strong> <span id="group-id">Your Group</span></p>
+                <p><strong>Author:</strong> <span id="author-name">Aleksi Maunumäki</span></p>
+                <p><strong>Group ID:</strong> <span id="group-id">NTIS24K</span></p>
             </aside>
         </div>
     </header>
@@ -53,11 +53,31 @@
                         Use this area to add new customers, edit existing customer information, and delete records.
                     </p>
 
-                    <div class="placeholder-box" id="customer-form">
-                        <p>
-                            Customer form and management actions will be added here later.
-                        </p>
+                    <div id="customer-form">
+                        <form id="customerForm">
+                            <input type="hidden" id="customer-id" />
+
+                            <label>First Name</label>
+                            <input type="text" id="first_name" required />
+
+                            <label>Last Name</label>
+                            <input type="text" id="last_name" required />
+
+                            <label>Email</label>
+                            <input type="email" id="email" required />
+
+                            <label>Phone</label>
+                            <input type="text" id="phone" />
+
+                            <label>Birth Date</label>
+                            <input type="date" id="birth_date" />
+
+                            <button type="submit" id="save-btn">Add Customer</button>
+                            <button type="button" id="delete-btn" class="danger" disabled>Delete</button>
+                            <button type="button" id="clear-btn">Clear</button>
+                        </form>
                     </div>
+
                 </section>
 
                 <section class="panel" aria-labelledby="customer-records-heading">
